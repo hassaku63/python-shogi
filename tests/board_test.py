@@ -78,6 +78,13 @@ class BoardTestCase(unittest.TestCase):
         self.assertFalse(shogi.Move.from_usi('P*9h') in board.legal_moves)
         self.assertEqual(len(board.legal_moves), 65)
 
+    def test_double_pawn_in_a_row_2(self):
+        board = shogi.Board('k7p/9/9/9/9/9/9/9/P8 b P 1')
+        self.assertFalse(shogi.Move.from_usi("P*9e") in board.legal_moves)
+        self.assertTrue(shogi.Move.from_usi("P*5e") in board.legal_moves)
+        self.assertTrue(shogi.Move.from_usi("P*1e") in board.legal_moves)
+        self.assertEqual(len(board.legal_moves), 65)
+
     def test_suicide(self):
         board = shogi.Board('1k7/9/1G7/9/9/9/9/9/9 w - 1')
         self.assertTrue(board.is_suicide_or_check_by_dropping_pawn(shogi.Move.from_usi('8a8b')))
